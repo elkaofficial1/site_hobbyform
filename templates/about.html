@@ -1,0 +1,176 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="about-container">
+    <div class="about-header">
+        <h1>
+            {% if language == 'ru' %}
+                О компании MoldCraft
+            {% else %}
+                About MoldCraft
+            {% endif %}
+        </h1>
+    </div>
+
+    <div class="about-content">
+        <div class="about-section">
+            <h2>
+                {% if language == 'ru' %}
+                    Наша история
+                {% else %}
+                    Our Story
+                {% endif %}
+            </h2>
+            <p>
+                {% if language == 'ru' %}
+                    MoldCraft была основана в 2020 году с целью предоставить мастерам и творческим людям доступ к высококачественным силиконовым формам. Мы верим, что каждый должен иметь возможность создавать уникальные изделия с помощью профессиональных инструментов.
+                {% else %}
+                    MoldCraft was founded in 2020 with the goal of providing craftsmen and creative individuals access to high-quality silicone molds. We believe that everyone should be able to create unique pieces using professional tools.
+                {% endif %}
+            </p>
+        </div>
+
+        <div class="about-section">
+            <h2>
+                {% if language == 'ru' %}
+                    Наша миссия
+                {% else %}
+                    Our Mission
+                {% endif %}
+            </h2>
+            <p>
+                {% if language == 'ru' %}
+                    Мы стремимся стать ведущим поставщиком силиконовых форм, предлагая инновационные решения и превосходное качество. Наша цель - вдохновлять творчество и помогать мастерам реализовывать их идеи.
+                {% else %}
+                    We strive to be the leading supplier of silicone molds, offering innovative solutions and superior quality. Our goal is to inspire creativity and help craftsmen realize their ideas.
+                {% endif %}
+            </p>
+        </div>
+
+        <div class="about-section">
+            <h2>
+                {% if language == 'ru' %}
+                    Наши ценности
+                {% else %}
+                    Our Values
+                {% endif %}
+            </h2>
+            <div class="values-grid">
+                <div class="value-item">
+                    <i class="fas fa-star"></i>
+                    <h3>
+                        {% if language == 'ru' %}
+                            Качество
+                        {% else %}
+                            Quality
+                        {% endif %}
+                    </h3>
+                    <p>
+                        {% if language == 'ru' %}
+                            Мы используем только лучшие материалы
+                        {% else %}
+                            We use only the finest materials
+                        {% endif %}
+                    </p>
+                </div>
+                <div class="value-item">
+                    <i class="fas fa-heart"></i>
+                    <h3>
+                        {% if language == 'ru' %}
+                            Страсть
+                        {% else %}
+                            Passion
+                        {% endif %}
+                    </h3>
+                    <p>
+                        {% if language == 'ru' %}
+                            Мы любим то, что делаем
+                        {% else %}
+                            We love what we do
+                        {% endif %}
+                    </p>
+                </div>
+                <div class="value-item">
+                    <i class="fas fa-handshake"></i>
+                    <h3>
+                        {% if language == 'ru' %}
+                            Надежность
+                        {% else %}
+                            Reliability
+                        {% endif %}
+                    </h3>
+                    <p>
+                        {% if language == 'ru' %}
+                            Мы всегда выполняем свои обещания
+                        {% else %}
+                            We always keep our promises
+                        {% endif %}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.about-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.about-header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.about-header h1 {
+    font-size: 2.5rem;
+    color: #333;
+}
+
+.about-section {
+    margin-bottom: 3rem;
+}
+
+.about-section h2 {
+    color: #007bff;
+    margin-bottom: 1rem;
+}
+
+.about-section p {
+    line-height: 1.6;
+    color: #666;
+}
+
+.values-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.value-item {
+    text-align: center;
+    padding: 2rem;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.value-item i {
+    font-size: 2.5rem;
+    color: #007bff;
+    margin-bottom: 1rem;
+}
+
+.value-item h3 {
+    color: #333;
+    margin-bottom: 0.5rem;
+}
+
+.value-item p {
+    color: #666;
+}
+</style>
+{% endblock %} 

@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="admin-container">
+    <h2>{% if language == 'ru' %}Панель администратора{% else %}Admin Dashboard{% endif %}</h2>
+    
+    <div class="admin-section">
+        <h3>{% if language == 'ru' %}Товары{% else %}Products{% endif %}</h3>
+        <a href="{{ url_for('new_product') }}" class="btn-primary">
+            {% if language == 'ru' %}Добавить товар{% else %}Add Product{% endif %}
+        </a>
+        <div class="admin-table">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>{% if language == 'ru' %}Название{% else %}Name{% endif %}</th>
+                        <th>{% if language == 'ru' %}Цена{% else %}Price{% endif %}</th>
+                        <th>{% if language == 'ru' %}Категория{% else %}Category{% endif %}</th>
+                        <th>{% if language == 'ru' %}Сток{% else %}Stock{% endif %}</th>
+                        <th>{% if language == 'ru' %}Действия{% else %}Actions{% endif %}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for product in products %}
+                    <tr>
+                        <td>{{ product.id }}</td>
+                        <td>{{ product.name if language == 'en' else product.name_ru }}</td>
+                        <td>{{ "%.2f"|format(product.price) }} ₽</td>
+                        <td>{{ product.category }}</td>
+                        <td>{{ product.stock }}</td>
+                        <td>
+                            <a href="{{ url_for('edit_product', product_id=product.id) }}" class="btn-secondary">
+                                {% if language == 'ru' %}Редактировать{% else %}Edit{% endif %}
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+    <div class="admin-section">
+        <h3>{% if language == 'ru' %}Заказы{% else %}Orders{% endif %}</h3>
+        <div class="admin-table">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>{% if language == 'ru' %}Дата{% else %}Date{% endif %}</th>
+                        <th>{% if language == 'ru' %}Клиент{% else %}Customer{% endif %}</th>
+                        <th>{% if language == 'ru' %}Сумма{% else %}Amount{% endif %}</th>
+                        <th>{% if language == 'ru' %}Статус{% else %}Status{% endif %}</th>
+                        <th>{% if language == 'ru' %}Действия{% else %}Actions{% endif %}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for order in orders %}
+                    <tr>
+                        <td>{{ order.id }}</td>
+                        <td>{{ order.date_ordered.strftime('%Y-%m-%d %H:%M') }}</td>
+                        <td>{{ order.customer.email }}</td>
+                        <td>{{ "%.2f"|format(order.total_amount) }} ₽</td>
+                        <td>
+                            <select onchange="updateOrderStatus({{ order.id }}, this.value)">
+                                <option value="pending" {% if order.status == 'pending' %}selected{% endif %}>
+                                    {% if language == 'ru' %}Ожидает{% else %}Pending{% endif %}
+                                </option>
+                                <option value="processing" {% if order.status == 'processing' %}selected{% endif %}>
+                                    {% if language == 'ru' %}В обработке{% else %}Processing{% endif %}
+                                </option>
+                                <option value="completed" {% if order.status == 'completed' %}selected{% endif %}>
+                                    {% if language == 'ru' %}Завершен{% else %}Completed{% endif %}
+                                </option>
+                                <option value="cancelled" {% if order.status == 'cancelled' %}selected{% endif %}>
+                                    {% if language == 'ru' %}Отменен{% else %}Cancelled{% endif %}
+                                </option>
+                            </select>
+                        </td>
+                        <td>
+                            <a href="{{ url_for('view_order', order_id=order.id) }}" class="btn-secondary">
+                                {% if language == 'ru' %}Просмотр{% else %}View{% endif %}
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %} 

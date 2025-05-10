@@ -1,0 +1,247 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="contact-container">
+    <div class="contact-header">
+        <h1>
+            {% if language == 'ru' %}
+                Свяжитесь с нами
+            {% else %}
+                Contact Us
+            {% endif %}
+        </h1>
+    </div>
+
+    <div class="contact-content">
+        <div class="contact-info">
+            <div class="info-section">
+                <i class="fas fa-map-marker-alt"></i>
+                <h3>
+                    {% if language == 'ru' %}
+                        Адрес
+                    {% else %}
+                        Address
+                    {% endif %}
+                </h3>
+                <p>123 Business Street, City, Country</p>
+            </div>
+
+            <div class="info-section">
+                <i class="fas fa-phone"></i>
+                <h3>
+                    {% if language == 'ru' %}
+                        Телефон
+                    {% else %}
+                        Phone
+                    {% endif %}
+                </h3>
+                <p>+1 234 567 890</p>
+            </div>
+
+            <div class="info-section">
+                <i class="fas fa-envelope"></i>
+                <h3>
+                    {% if language == 'ru' %}
+                        Email
+                    {% else %}
+                        Email
+                    {% endif %}
+                </h3>
+                <p>info@moldcraft.com</p>
+            </div>
+
+            <div class="info-section">
+                <i class="fas fa-clock"></i>
+                <h3>
+                    {% if language == 'ru' %}
+                        Часы работы
+                    {% else %}
+                        Working Hours
+                    {% endif %}
+                </h3>
+                <p>
+                    {% if language == 'ru' %}
+                        Пн-Пт: 9:00 - 18:00<br>
+                        Сб-Вс: Выходной
+                    {% else %}
+                        Mon-Fri: 9:00 AM - 6:00 PM<br>
+                        Sat-Sun: Closed
+                    {% endif %}
+                </p>
+            </div>
+        </div>
+
+        <div class="contact-form">
+            <h2>
+                {% if language == 'ru' %}
+                    Отправить сообщение
+                {% else %}
+                    Send us a Message
+                {% endif %}
+            </h2>
+            <form method="POST" action="{{ url_for('contact') }}">
+                <div class="form-group">
+                    <label for="name">
+                        {% if language == 'ru' %}
+                            Имя
+                        {% else %}
+                            Name
+                        {% endif %}
+                    </label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">
+                        {% if language == 'ru' %}
+                            Email
+                        {% else %}
+                            Email
+                        {% endif %}
+                    </label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="subject">
+                        {% if language == 'ru' %}
+                            Тема
+                        {% else %}
+                            Subject
+                        {% endif %}
+                    </label>
+                    <input type="text" id="subject" name="subject" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="message">
+                        {% if language == 'ru' %}
+                            Сообщение
+                        {% else %}
+                            Message
+                        {% endif %}
+                    </label>
+                    <textarea id="message" name="message" rows="5" required></textarea>
+                </div>
+
+                <button type="submit" class="submit-btn">
+                    {% if language == 'ru' %}
+                        Отправить
+                    {% else %}
+                        Send Message
+                    {% endif %}
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<style>
+.contact-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.contact-header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.contact-header h1 {
+    font-size: 2.5rem;
+    color: #333;
+}
+
+.contact-content {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 3rem;
+}
+
+.contact-info {
+    background: #f8f9fa;
+    padding: 2rem;
+    border-radius: 10px;
+}
+
+.info-section {
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.info-section i {
+    font-size: 2rem;
+    color: #007bff;
+    margin-bottom: 1rem;
+}
+
+.info-section h3 {
+    color: #333;
+    margin-bottom: 0.5rem;
+}
+
+.info-section p {
+    color: #666;
+    line-height: 1.6;
+}
+
+.contact-form {
+    background: white;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.contact-form h2 {
+    color: #333;
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #333;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+.form-group textarea {
+    resize: vertical;
+}
+
+.submit-btn {
+    background: #007bff;
+    color: white;
+    padding: 1rem 2rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+    font-size: 1rem;
+    transition: background-color 0.3s;
+}
+
+.submit-btn:hover {
+    background: #0056b3;
+}
+
+@media (max-width: 768px) {
+    .contact-content {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+{% endblock %} 

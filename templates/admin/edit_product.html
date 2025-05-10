@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="admin-container">
+    <h2>{% if language == 'ru' %}Редактировать товар{% else %}Edit Product{% endif %}</h2>
+    
+    <div class="admin-section">
+        <form method="POST" class="admin-form">
+            <div class="form-group">
+                <label for="name">{% if language == 'ru' %}Название (EN){% else %}Name (EN){% endif %}</label>
+                <input type="text" id="name" name="name" value="{{ product.name }}" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="name_ru">{% if language == 'ru' %}Название (RU){% else %}Name (RU){% endif %}</label>
+                <input type="text" id="name_ru" name="name_ru" value="{{ product.name_ru }}" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="description">{% if language == 'ru' %}Описание (EN){% else %}Description (EN){% endif %}</label>
+                <textarea id="description" name="description" required>{{ product.description }}</textarea>
+            </div>
+            
+            <div class="form-group">
+                <label for="description_ru">{% if language == 'ru' %}Описание (RU){% else %}Description (RU){% endif %}</label>
+                <textarea id="description_ru" name="description_ru" required>{{ product.description_ru }}</textarea>
+            </div>
+            
+            <div class="form-group">
+                <label for="price">{% if language == 'ru' %}Цена{% else %}Price{% endif %}</label>
+                <input type="number" id="price" name="price" step="0.01" value="{{ product.price }}" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="image_url">{% if language == 'ru' %}URL изображения{% else %}Image URL{% endif %}</label>
+                <input type="url" id="image_url" name="image_url" value="{{ product.image_url }}" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="category">{% if language == 'ru' %}Категория{% else %}Category{% endif %}</label>
+                <select id="category" name="category" required>
+                    <option value="soap" {% if product.category == 'soap' %}selected{% endif %}>
+                        {% if language == 'ru' %}Мыло{% else %}Soap{% endif %}
+                    </option>
+                    <option value="chocolate" {% if product.category == 'chocolate' %}selected{% endif %}>
+                        {% if language == 'ru' %}Шоколад{% else %}Chocolate{% endif %}
+                    </option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="stock">{% if language == 'ru' %}Количество{% else %}Stock{% endif %}</label>
+                <input type="number" id="stock" name="stock" value="{{ product.stock }}" required>
+            </div>
+            
+            <div class="form-actions">
+                <button type="submit" class="btn-primary">
+                    {% if language == 'ru' %}Сохранить изменения{% else %}Save Changes{% endif %}
+                </button>
+                <a href="{{ url_for('admin_dashboard') }}" class="btn-secondary">
+                    {% if language == 'ru' %}Отмена{% else %}Cancel{% endif %}
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %} 

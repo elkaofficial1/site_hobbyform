@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="{{ language }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% if language == 'ru' %}Hobby Form - Силиконовые формы{% else %}Hobby Form - Silicone Molds{% endif %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #9c6b8d;
+            --secondary-color: #7d4b6d;
+            --text-color: #4a4a4a;
+            --light-bg: #f8f6f9;
+            --gradient: linear-gradient(135deg, #9c6b8d, #7d4b6d);
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: var(--light-bg);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        .navbar {
+            background: var(--gradient);
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            color: white;
+            font-size: 1.8rem;
+            font-weight: 700;
+            text-decoration: none;
+            text-transform: uppercase;
+            opacity: 0.95;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            opacity: 0.9;
+        }
+
+        .nav-links a:hover {
+            background: rgba(255,255,255,0.15);
+            opacity: 1;
+        }
+
+        .btn-primary {
+            background: var(--gradient);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            opacity: 0.95;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(157,107,141,0.2);
+            opacity: 1;
+        }
+
+        .language-selector {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .language-selector a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            padding: 0.3rem 0.6rem;
+            border-radius: 3px;
+            opacity: 0.9;
+        }
+
+        .language-selector a.active {
+            background: rgba(255,255,255,0.15);
+            opacity: 1;
+        }
+
+        main {
+            min-height: calc(100vh - 200px);
+            padding: 2rem 0;
+        }
+
+        .flash-message {
+            max-width: 1200px;
+            margin: 1rem auto;
+            padding: 1rem;
+            background: var(--gradient);
+            color: white;
+            border-radius: 5px;
+            text-align: center;
+            opacity: 0.95;
+        }
+
+        footer {
+            background: var(--gradient);
+            color: white;
+            padding: 3rem 0 1rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1.5rem;
+            font-size: 1.2rem;
+            opacity: 0.95;
+        }
+
+        .footer-section a {
+            color: white;
+            text-decoration: none;
+            display: block;
+            margin-bottom: 0.8rem;
+            transition: opacity 0.3s;
+            opacity: 0.8;
+        }
+
+        .footer-section a:hover {
+            opacity: 1;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            opacity: 0.8;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            .navbar {
+                padding: 0.5rem 1rem;
+            }
+            
+            .navbar-brand {
+                font-size: 1.2rem;
+            }
+            
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: white;
+                padding: 1rem;
+                box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .nav-links.active {
+                display: flex;
+            }
+            
+            .nav-links a {
+                margin: 0.5rem 0;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .hero {
+                padding: 2rem 1rem;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .features {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            
+            .feature {
+                padding: 1rem;
+            }
+            
+            .products-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            
+            .product-card {
+                margin: 0;
+            }
+            
+            .footer {
+                padding: 2rem 1rem;
+            }
+            
+            .footer-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .footer-section {
+                margin: 1rem 0;
+            }
+            
+            .social-links {
+                justify-content: center;
+            }
+        }
+
+        /* Добавляем стили для мобильного меню */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--text-color);
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: block;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="{{ url_for('home') }}" class="logo">Hobby Form</a>
+            <div class="nav-links">
+                <a href="{{ url_for('home') }}">{% if language == 'ru' %}Главная{% else %}Home{% endif %}</a>
+                <a href="{{ url_for('products') }}">{% if language == 'ru' %}Товары{% else %}Products{% endif %}</a>
+                <a href="{{ url_for('about') }}">{% if language == 'ru' %}О нас{% else %}About{% endif %}</a>
+                <a href="{{ url_for('contact') }}">{% if language == 'ru' %}Контакты{% else %}Contact{% endif %}</a>
+                {% if current_user.is_authenticated %}
+                    <a href="{{ url_for('cart') }}"><i class="fas fa-shopping-cart"></i></a>
+                    {% if not current_user.is_admin %}
+                    <a href="{{ url_for('become_admin') }}">{% if language == 'ru' %}Стать администратором{% else %}Become Admin{% endif %}</a>
+                    {% endif %}
+                    <a href="{{ url_for('logout') }}">{% if language == 'ru' %}Выйти{% else %}Logout{% endif %}</a>
+                {% else %}
+                    <a href="{{ url_for('login') }}">{% if language == 'ru' %}Войти{% else %}Login{% endif %}</a>
+                    <a href="{{ url_for('register') }}" class="btn-primary">{% if language == 'ru' %}Регистрация{% else %}Register{% endif %}</a>
+                {% endif %}
+                <div class="language-selector">
+                    <a href="{{ url_for('set_language', lang='en') }}" class="{% if language == 'en' %}active{% endif %}">EN</a>
+                    <span>|</span>
+                    <a href="{{ url_for('set_language', lang='ru') }}" class="{% if language == 'ru' %}active{% endif %}">RU</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="flash-message">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Hobby Form</h3>
+                <p>{% if language == 'ru' %}Ваш источник качественных силиконовых форм{% else %}Your source for quality silicone molds{% endif %}</p>
+            </div>
+            <div class="footer-section">
+                <h3>{% if language == 'ru' %}Быстрые ссылки{% else %}Quick Links{% endif %}</h3>
+                <a href="{{ url_for('home') }}">{% if language == 'ru' %}Главная{% else %}Home{% endif %}</a>
+                <a href="{{ url_for('products') }}">{% if language == 'ru' %}Товары{% else %}Products{% endif %}</a>
+                <a href="{{ url_for('about') }}">{% if language == 'ru' %}О нас{% else %}About{% endif %}</a>
+                <a href="{{ url_for('contact') }}">{% if language == 'ru' %}Контакты{% else %}Contact{% endif %}</a>
+            </div>
+            <div class="footer-section">
+                <h3>{% if language == 'ru' %}Свяжитесь с нами{% else %}Contact Us{% endif %}</h3>
+                <p>Email: info@hobbyform.com</p>
+                <p>{% if language == 'ru' %}Телефон{% else %}Phone{% endif %}: +7 (999) 123-4567</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Hobby Form. {% if language == 'ru' %}Все права защищены{% else %}All rights reserved{% endif %}.</p>
+        </div>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <script>
+    // Добавляем JavaScript для мобильного меню
+    document.addEventListener('DOMContentLoaded', function() {
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const navLinks = document.querySelector('.nav-links');
+        
+        if (mobileMenuBtn && navLinks) {
+            mobileMenuBtn.addEventListener('click', function() {
+                navLinks.classList.toggle('active');
+            });
+            
+            // Закрываем меню при клике вне его
+            document.addEventListener('click', function(event) {
+                if (!event.target.closest('.navbar')) {
+                    navLinks.classList.remove('active');
+                }
+            });
+        }
+    });
+    </script>
+</body>
+</html> 

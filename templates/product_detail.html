@@ -1,0 +1,163 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="product-detail">
+    <div class="product-container">
+        <div class="product-image">
+            <img src="{{ product.image_url }}" alt="{{ product.name }}">
+        </div>
+        <div class="product-info">
+            <h1>{% if language == 'ru' %}{{ product.name_ru }}{% else %}{{ product.name }}{% endif %}</h1>
+            <p class="description">
+                {% if language == 'ru' %}
+                    {{ product.description_ru }}
+                {% else %}
+                    {{ product.description }}
+                {% endif %}
+            </p>
+            <div class="price">
+                {{ "%.2f"|format(product.price) }} ₽
+            </div>
+            <div class="stock">
+                {% if language == 'ru' %}
+                    В наличии: {{ product.stock }} шт.
+                {% else %}
+                    In stock: {{ product.stock }} pcs.
+                {% endif %}
+            </div>
+            {% if current_user.is_authenticated %}
+                <button class="btn-primary add-to-cart" data-product-id="{{ product.id }}">
+                    {% if language == 'ru' %}
+                        Добавить в корзину
+                    {% else %}
+                        Add to Cart
+                    {% endif %}
+                </button>
+            {% else %}
+                <a href="{{ url_for('login') }}" class="btn-primary">
+                    {% if language == 'ru' %}
+                        Войдите, чтобы купить
+                    {% else %}
+                        Login to Purchase
+                    {% endif %}
+                </a>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<style>
+.product-detail {
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.product-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    background: white;
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+
+.product-image {
+    width: 100%;
+    height: 400px;
+    overflow: hidden;
+    border-radius: 10px;
+}
+
+.product-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.product-info {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.product-info h1 {
+    font-size: 2rem;
+    color: var(--text-color);
+    margin: 0;
+}
+
+.description {
+    color: #666;
+    line-height: 1.6;
+    font-size: 1.1rem;
+}
+
+.price {
+    font-size: 2rem;
+    font-weight: 600;
+    color: var(--primary-color);
+}
+
+.stock {
+    color: #666;
+    font-size: 1.1rem;
+}
+
+.btn-primary {
+    background: var(--gradient);
+    color: white;
+    padding: 1rem 2rem;
+    border: none;
+    border-radius: 25px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-align: center;
+    text-decoration: none;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(157,107,141,0.2);
+}
+
+@media (max-width: 768px) {
+    .product-container {
+        grid-template-columns: 1fr;
+    }
+    
+    .product-image {
+        height: 300px;
+    }
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const addToCartButton = document.querySelector('.add-to-cart');
+    if (addToCartButton) {
+        addToCartButton.addEventListener('click', function() {
+            const productId = this.dataset.productId;
+            fetch(`/add_to_cart/${productId}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('{% if language == "ru" %}Товар добавлен в корзину{% else %}Product added to cart{% endif %}');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        });
+    }
+});
+</script>
+{% endblock %} 

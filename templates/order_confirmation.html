@@ -1,0 +1,377 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="confirmation-container">
+    <div class="confirmation-content">
+        <div class="success-icon">
+            <i class="fas fa-check-circle"></i>
+        </div>
+        
+        <h1>
+            {% if language == 'ru' %}
+                Заказ успешно оформлен!
+            {% else %}
+                Order Successfully Placed!
+            {% endif %}
+        </h1>
+        
+        <div class="order-details">
+            <h2>
+                {% if language == 'ru' %}
+                    Детали заказа
+                {% else %}
+                    Order Details
+                {% endif %}
+            </h2>
+            
+            <div class="detail-row">
+                <span>
+                    {% if language == 'ru' %}
+                        Номер заказа:
+                    {% else %}
+                        Order Number:
+                    {% endif %}
+                </span>
+                <span>#{{ order.id }}</span>
+            </div>
+            
+            <div class="detail-row">
+                <span>
+                    {% if language == 'ru' %}
+                        Дата заказа:
+                    {% else %}
+                        Order Date:
+                    {% endif %}
+                </span>
+                <span>{{ order.date_ordered.strftime('%d.%m.%Y %H:%M') }}</span>
+            </div>
+            
+            <div class="detail-row">
+                <span>
+                    {% if language == 'ru' %}
+                        Статус:
+                    {% else %}
+                        Status:
+                    {% endif %}
+                </span>
+                <span class="status">
+                    {% if language == 'ru' %}
+                        {% if order.status == 'pending' %}
+                            В обработке
+                        {% elif order.status == 'processing' %}
+                            Обрабатывается
+                        {% elif order.status == 'shipped' %}
+                            Отправлен
+                        {% elif order.status == 'delivered' %}
+                            Доставлен
+                        {% endif %}
+                    {% else %}
+                        {{ order.status|title }}
+                    {% endif %}
+                </span>
+            </div>
+            
+            <div class="detail-row">
+                <span>
+                    {% if language == 'ru' %}
+                        Способ доставки:
+                    {% else %}
+                        Delivery Method:
+                    {% endif %}
+                </span>
+                <span>
+                    {% if language == 'ru' %}
+                        {% if order.delivery_method == 'pickup' %}
+                            Самовывоз
+                        {% else %}
+                            Доставка
+                        {% endif %}
+                    {% else %}
+                        {{ order.delivery_method|title }}
+                    {% endif %}
+                </span>
+            </div>
+            
+            {% if order.delivery_address %}
+            <div class="detail-row">
+                <span>
+                    {% if language == 'ru' %}
+                        Адрес доставки:
+                    {% else %}
+                        Delivery Address:
+                    {% endif %}
+                </span>
+                <span>{{ order.delivery_address }}</span>
+            </div>
+            {% endif %}
+            
+            <div class="detail-row total">
+                <span>
+                    {% if language == 'ru' %}
+                        Итого:
+                    {% else %}
+                        Total:
+                    {% endif %}
+                </span>
+                <span>{{ "%.2f"|format(order.total_amount) }} ₽</span>
+            </div>
+        </div>
+        
+        <div class="order-items">
+            <h2>
+                {% if language == 'ru' %}
+                    Товары в заказе
+                {% else %}
+                    Order Items
+                {% endif %}
+            </h2>
+            
+            {% for item in order.items %}
+            <div class="order-item">
+                <div class="item-info">
+                    <h3>
+                        {% if language == 'ru' %}
+                            {{ item.product.name_ru }}
+                        {% else %}
+                            {{ item.product.name }}
+                        {% endif %}
+                    </h3>
+                    <p class="quantity">
+                        {% if language == 'ru' %}
+                            Количество:
+                        {% else %}
+                            Quantity:
+                        {% endif %}
+                        {{ item.quantity }}
+                    </p>
+                </div>
+                <p class="price">{{ "%.2f"|format(item.price * item.quantity) }} ₽</p>
+            </div>
+            {% endfor %}
+        </div>
+
+        {% if not order.payment_confirmed %}
+        <div class="payment-section">
+            <h2>
+                {% if language == 'ru' %}
+                    Информация об оплате
+                {% else %}
+                    Payment Information
+                {% endif %}
+            </h2>
+            
+            <div class="payment-details">
+                <p>
+                    {% if language == 'ru' %}
+                        Для подтверждения заказа, пожалуйста, оплатите его по следующим реквизитам:
+                    {% else %}
+                        To confirm your order, please make a payment using the following details:
+                    {% endif %}
+                </p>
+                
+                <div class="bank-details">
+                    <p><strong>Сбербанк:</strong> 1234 5678 9012 3456</p>
+                    <p><strong>Получатель:</strong> Иван Иванов</p>
+                    <p><strong>Сумма:</strong> {{ "%.2f"|format(order.total_amount) }} ₽</p>
+                </div>
+                
+                <form action="{{ url_for('upload_payment', order_id=order.id) }}" method="POST" enctype="multipart/form-data" class="upload-form">
+                    <div class="form-group">
+                        <label for="payment_screenshot">
+                            {% if language == 'ru' %}
+                                Загрузите скриншот оплаты:
+                            {% else %}
+                                Upload payment screenshot:
+                            {% endif %}
+                        </label>
+                        <input type="file" id="payment_screenshot" name="payment_screenshot" accept="image/*" required>
+                    </div>
+                    <button type="submit" class="btn-primary">
+                        {% if language == 'ru' %}
+                            Отправить скриншот
+                        {% else %}
+                            Upload Screenshot
+                        {% endif %}
+                    </button>
+                </form>
+            </div>
+        </div>
+        {% endif %}
+        
+        <div class="actions">
+            <a href="{{ url_for('home') }}" class="btn-primary">
+                {% if language == 'ru' %}
+                    Вернуться на главную
+                {% else %}
+                    Return to Home
+                {% endif %}
+            </a>
+        </div>
+    </div>
+</div>
+
+<style>
+.confirmation-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.confirmation-content {
+    background: white;
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+
+.success-icon {
+    text-align: center;
+    font-size: 4rem;
+    color: #4CAF50;
+    margin-bottom: 1rem;
+}
+
+h1 {
+    text-align: center;
+    color: var(--text-color);
+    margin-bottom: 2rem;
+}
+
+.order-details, .order-items, .payment-section {
+    margin-bottom: 2rem;
+    padding: 1.5rem;
+    background: var(--light-bg);
+    border-radius: 10px;
+}
+
+h2 {
+    color: var(--text-color);
+    margin-bottom: 1.5rem;
+    font-size: 1.3rem;
+}
+
+.detail-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #eee;
+}
+
+.detail-row:last-child {
+    border-bottom: none;
+}
+
+.detail-row.total {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--primary-color);
+}
+
+.status {
+    color: var(--primary-color);
+    font-weight: 600;
+}
+
+.order-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 0;
+    border-bottom: 1px solid #eee;
+}
+
+.order-item:last-child {
+    border-bottom: none;
+}
+
+.item-info h3 {
+    margin: 0;
+    font-size: 1.1rem;
+    color: var(--text-color);
+}
+
+.quantity {
+    color: #666;
+    font-size: 0.9rem;
+    margin: 0.5rem 0 0;
+}
+
+.price {
+    font-weight: 600;
+    color: var(--primary-color);
+}
+
+.payment-details {
+    margin-top: 1rem;
+}
+
+.bank-details {
+    background: white;
+    padding: 1rem;
+    border-radius: 8px;
+    margin: 1rem 0;
+}
+
+.bank-details p {
+    margin: 0.5rem 0;
+}
+
+.upload-form {
+    margin-top: 1.5rem;
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--text-color);
+}
+
+.form-group input[type="file"] {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.actions {
+    text-align: center;
+    margin-top: 2rem;
+}
+
+.btn-primary {
+    display: inline-block;
+    padding: 1rem 2rem;
+    font-size: 1.1rem;
+}
+
+@media (max-width: 768px) {
+    .confirmation-container {
+        padding: 1rem;
+    }
+    
+    .confirmation-content {
+        padding: 1.5rem;
+    }
+    
+    .detail-row {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    
+    .order-item {
+        flex-direction: column;
+        text-align: center;
+        gap: 0.5rem;
+    }
+    
+    .bank-details {
+        font-size: 0.9rem;
+    }
+}
+</style>
+{% endblock %} 

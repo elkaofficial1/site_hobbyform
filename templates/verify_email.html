@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="auth-container">
+    <div class="auth-box">
+        <h2>{% if language == 'ru' %}Подтверждение email{% else %}Email Verification{% endif %}</h2>
+        
+        <form method="POST" class="auth-form">
+            <div class="form-group">
+                <label for="verification_code">
+                    {% if language == 'ru' %}
+                    Введите код подтверждения, отправленный на ваш email
+                    {% else %}
+                    Enter the verification code sent to your email
+                    {% endif %}
+                </label>
+                <input type="text" id="verification_code" name="verification_code" required>
+            </div>
+            
+            <button type="submit" class="btn-primary">
+                {% if language == 'ru' %}Подтвердить{% else %}Verify{% endif %}
+            </button>
+        </form>
+        
+        <div class="auth-link">
+            {% if language == 'ru' %}
+            Не получили код? <a href="{{ url_for('register') }}">Зарегистрироваться снова</a>
+            {% else %}
+            Didn't receive the code? <a href="{{ url_for('register') }}">Register again</a>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %} 

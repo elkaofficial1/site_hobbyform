@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="auth-container">
+    <div class="auth-box">
+        <h2>{% if language == 'ru' %}Вход{% else %}Login{% endif %}</h2>
+        <form method="POST" action="{{ url_for('login') }}" class="auth-form">
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="password">{% if language == 'ru' %}Пароль{% else %}Password{% endif %}</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <button type="submit" class="btn-primary">{% if language == 'ru' %}Войти{% else %}Login{% endif %}</button>
+        </form>
+        <p class="auth-link">
+            {% if language == 'ru' %}
+            Нет аккаунта? <a href="{{ url_for('register') }}">Зарегистрироваться</a>
+            {% else %}
+            Don't have an account? <a href="{{ url_for('register') }}">Register</a>
+            {% endif %}
+        </p>
+    </div>
+</div>
+{% endblock %} 

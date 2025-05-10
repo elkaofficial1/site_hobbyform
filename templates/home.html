@@ -1,0 +1,303 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="hero">
+    <div class="hero-content">
+        <h1>
+            {% if language == 'ru' %}
+                Силиконовые формы для творчества
+            {% else %}
+                Silicone Molds for Creativity
+            {% endif %}
+        </h1>
+        <p>
+            {% if language == 'ru' %}
+                Формы для мыла, шоколада, свечей. Изготавливаем из силикона США, а так же из пищевого силикона с помощью вакуумного оборудования.
+            {% else %}
+                Molds for soap, chocolate, candles. Made from US silicone and food-grade silicone using vacuum equipment.
+            {% endif %}
+        </p>
+        <a href="{{ url_for('products') }}" class="btn-primary">
+            {% if language == 'ru' %}
+                Смотреть товары
+            {% else %}
+                View Products
+            {% endif %}
+        </a>
+    </div>
+</div>
+
+<div class="price-info">
+    <div class="price-info-content">
+        <h2>
+            {% if language == 'ru' %}
+                Напоминалочка про цены ❤
+            {% else %}
+                Price Guide ❤
+            {% endif %}
+        </h2>
+        <p>
+            {% if language == 'ru' %}
+                Так как в нашем ассортименте 2 вида силикона, то вы иногда задаете вопрос про цены, ну и чтобы вам было легче ориентироваться, сделали для вас шпаргалочку 😘
+            {% else %}
+                Since we offer 2 types of silicone, you often ask about prices. To make it easier for you, we've created this guide 😘
+            {% endif %}
+        </p>
+        <div class="price-types">
+            <div class="price-type">
+                <i class="fas fa-star"></i>
+                <h3>
+                    {% if language == 'ru' %}
+                        Силикон КИТАЙ
+                    {% else %}
+                        Chinese Silicone
+                    {% endif %}
+                </h3>
+                <p>
+                    {% if language == 'ru' %}
+                        Цена альбома
+                    {% else %}
+                        Album price
+                    {% endif %}
+                </p>
+            </div>
+            <div class="price-type">
+                <i class="fas fa-heart"></i>
+                <h3>
+                    {% if language == 'ru' %}
+                        Силикон пищевой
+                    {% else %}
+                        Food-grade Silicone
+                    {% endif %}
+                </h3>
+                <p>
+                    {% if language == 'ru' %}
+                        К цене альбома +15%
+                    {% else %}
+                        Album price +15%
+                    {% endif %}
+                </p>
+            </div>
+        </div>
+        <p class="note">
+            {% if language == 'ru' %}
+                💖 Приятных всем покупок 💖
+            {% else %}
+                💖 Happy Shopping 💖
+            {% endif %}
+        </p>
+    </div>
+</div>
+
+<div class="features">
+    <div class="feature">
+        <i class="fas fa-medal"></i>
+        <h3>
+            {% if language == 'ru' %}
+                Качественные материалы
+            {% else %}
+                Quality Materials
+            {% endif %}
+        </h3>
+        <p>
+            {% if language == 'ru' %}
+                Используем силикон из США и пищевой силикон
+            {% else %}
+                We use US silicone and food-grade silicone
+            {% endif %}
+        </p>
+    </div>
+    <div class="feature">
+        <i class="fas fa-tools"></i>
+        <h3>
+            {% if language == 'ru' %}
+                Вакуумное оборудование
+            {% else %}
+                Vacuum Equipment
+            {% endif %}
+        </h3>
+        <p>
+            {% if language == 'ru' %}
+                Профессиональное изготовление форм
+            {% else %}
+                Professional mold manufacturing
+            {% endif %}
+        </p>
+    </div>
+    <div class="feature">
+        <i class="fas fa-shopping-bag"></i>
+        <h3>
+            {% if language == 'ru' %}
+                Дополнительные товары
+            {% else %}
+                Additional Products
+            {% endif %}
+        </h3>
+        <p>
+            {% if language == 'ru' %}
+                Упаковка, пигменты, отдушки, печать
+            {% else %}
+                Packaging, pigments, fragrances, printing
+            {% endif %}
+        </p>
+    </div>
+</div>
+
+<style>
+.hero {
+    background: var(--gradient);
+    color: white;
+    padding: 4rem 2rem;
+    text-align: center;
+    margin-bottom: 3rem;
+    opacity: 0.95;
+}
+
+.hero-content {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.hero h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
+    font-weight: 700;
+    opacity: 0.95;
+}
+
+.hero p {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+    opacity: 0.9;
+}
+
+.price-info {
+    background: white;
+    padding: 3rem 2rem;
+    margin-bottom: 3rem;
+    border-radius: 15px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+}
+
+.price-info-content {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.price-info h2 {
+    color: var(--primary-color);
+    margin-bottom: 1.5rem;
+    font-size: 2rem;
+    opacity: 0.95;
+}
+
+.price-types {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin: 2rem 0;
+}
+
+.price-type {
+    background: var(--light-bg);
+    padding: 2rem;
+    border-radius: 10px;
+    transition: all 0.3s;
+    border: 1px solid rgba(157,107,141,0.1);
+}
+
+.price-type:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 15px rgba(157,107,141,0.1);
+}
+
+.price-type i {
+    font-size: 2.5rem;
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+    opacity: 0.9;
+}
+
+.price-type h3 {
+    color: var(--text-color);
+    margin-bottom: 0.5rem;
+    opacity: 0.95;
+}
+
+.price-type p {
+    color: var(--secondary-color);
+    font-weight: 600;
+    opacity: 0.9;
+}
+
+.note {
+    font-size: 1.2rem;
+    color: var(--primary-color);
+    margin-top: 2rem;
+    opacity: 0.9;
+}
+
+.features {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.feature {
+    background: white;
+    padding: 2rem;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    transition: all 0.3s;
+    border: 1px solid rgba(157,107,141,0.1);
+}
+
+.feature:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 15px rgba(157,107,141,0.1);
+}
+
+.feature i {
+    font-size: 2.5rem;
+    color: var(--primary-color);
+    margin-bottom: 1.5rem;
+    opacity: 0.9;
+}
+
+.feature h3 {
+    color: var(--text-color);
+    margin-bottom: 1rem;
+    font-size: 1.3rem;
+    opacity: 0.95;
+}
+
+.feature p {
+    color: #666;
+    line-height: 1.6;
+    opacity: 0.9;
+}
+
+@media (max-width: 768px) {
+    .hero h1 {
+        font-size: 2rem;
+    }
+    
+    .hero p {
+        font-size: 1rem;
+    }
+    
+    .price-info {
+        padding: 2rem 1rem;
+    }
+    
+    .features {
+        padding: 1rem;
+    }
+}
+</style>
+{% endblock %} 

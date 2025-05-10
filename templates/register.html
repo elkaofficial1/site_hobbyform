@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="auth-container">
+    <div class="auth-box">
+        <h2>{% if language == 'ru' %}Регистрация{% else %}Register{% endif %}</h2>
+        <form method="POST" action="{{ url_for('register') }}" class="auth-form">
+            <div class="form-group">
+                <label for="name">{% if language == 'ru' %}Имя{% else %}Name{% endif %}</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="password">{% if language == 'ru' %}Пароль{% else %}Password{% endif %}</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <div class="form-group">
+                <label for="city">{% if language == 'ru' %}Город{% else %}City{% endif %}</label>
+                <input type="text" id="city" name="city" required>
+            </div>
+            <div class="form-group">
+                <label for="delivery_method">{% if language == 'ru' %}Предпочтительный способ доставки{% else %}Preferred Delivery Method{% endif %}</label>
+                <select id="delivery_method" name="delivery_method" required>
+                    <option value="russian_post">{% if language == 'ru' %}Почта России{% else %}Russian Post{% endif %}</option>
+                    <option value="cdek">{% if language == 'ru' %}СДЭК{% else %}CDEK{% endif %}</option>
+                    <option value="avito">{% if language == 'ru' %}Авито Доставка{% else %}Avito Delivery{% endif %}</option>
+                    <option value="international">{% if language == 'ru' %}Международная доставка{% else %}International Delivery{% endif %}</option>
+                </select>
+            </div>
+            <button type="submit" class="btn-primary">{% if language == 'ru' %}Зарегистрироваться{% else %}Register{% endif %}</button>
+        </form>
+        <p class="auth-link">
+            {% if language == 'ru' %}
+            Уже есть аккаунт? <a href="{{ url_for('login') }}">Войти</a>
+            {% else %}
+            Already have an account? <a href="{{ url_for('login') }}">Login</a>
+            {% endif %}
+        </p>
+    </div>
+</div>
+{% endblock %} 

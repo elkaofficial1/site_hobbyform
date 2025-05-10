@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="hero">
+    <div class="hero-content">
+        <h1>{% if language == 'ru' %}Премиальные силиконовые формы{% else %}Premium Silicone Molds{% endif %}</h1>
+        <p>{% if language == 'ru' %}Создавайте красивые дизайны мыла и шоколада с нашими высококачественными силиконовыми формами{% else %}Create beautiful soap and chocolate designs with our high-quality silicone molds{% endif %}</p>
+        <a href="#products" class="btn-primary">{% if language == 'ru' %}Магазин{% else %}Shop Now{% endif %}</a>
+    </div>
+</section>
+
+<section id="products" class="products-section">
+    <h2>{% if language == 'ru' %}Популярные товары{% else %}Featured Products{% endif %}</h2>
+    <div class="product-grid">
+        {% for product in products %}
+        <div class="product-card">
+            <img src="{{ product.image_url }}" alt="{{ product.name if language == 'en' else product.name_ru }}" class="product-image">
+            <div class="product-info">
+                <h3 class="product-title">{{ product.name if language == 'en' else product.name_ru }}</h3>
+                <p class="product-description">{{ product.description if language == 'en' else product.description_ru }}</p>
+                <p class="product-price">{{ "%.2f"|format(product.price) }} ₽</p>
+                <button 
+                    class="btn-primary" 
+                    onclick="addToCart({{ product.id }})" 
+                    data-product-id="{{ product.id }}"
+                >
+                    {% if language == 'ru' %}Добавить в корзину{% else %}Add to Cart{% endif %}
+                </button>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<section id="about" class="about-section">
+    <div class="about-content">
+        <h2>{% if language == 'ru' %}О MoldCraft{% else %}About MoldCraft{% endif %}</h2>
+        <p>{% if language == 'ru' %}Мы специализируемся на высококачественных силиконовых формах для изготовления мыла и шоколада. Наши продукты разработаны с учетом точности и долговечности, обеспечивая идеальные результаты каждый раз.{% else %}We specialize in high-quality silicone molds for soap and chocolate making. Our products are designed with precision and durability in mind, ensuring perfect results every time.{% endif %}</p>
+        <div class="features">
+            <div class="feature">
+                <i class="fas fa-check-circle"></i>
+                <h3>{% if language == 'ru' %}Премиум качество{% else %}Premium Quality{% endif %}</h3>
+                <p>{% if language == 'ru' %}Пищевой силикон, безопасный и долговечный{% else %}Food-grade silicone that's safe and durable{% endif %}</p>
+            </div>
+            <div class="feature">
+                <i class="fas fa-shipping-fast"></i>
+                <h3>{% if language == 'ru' %}Быстрая доставка{% else %}Fast Shipping{% endif %}</h3>
+                <p>{% if language == 'ru' %}Быстрая доставка по всему миру{% else %}Quick delivery worldwide{% endif %}</p>
+            </div>
+            <div class="feature">
+                <i class="fas fa-medal"></i>
+                <h3>{% if language == 'ru' %}Гарантия{% else %}Guaranteed{% endif %}</h3>
+                <p>{% if language == 'ru' %}100% гарантия удовлетворенности{% else %}100% satisfaction guarantee{% endif %}</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="contact" class="contact-section">
+    <h2>{% if language == 'ru' %}Свяжитесь с нами{% else %}Contact Us{% endif %}</h2>
+    <div class="contact-content">
+        <form class="contact-form">
+            <div class="form-group">
+                <label for="name">{% if language == 'ru' %}Имя{% else %}Name{% endif %}</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="message">{% if language == 'ru' %}Сообщение{% else %}Message{% endif %}</label>
+                <textarea id="message" name="message" required></textarea>
+            </div>
+            <button type="submit" class="btn-primary">{% if language == 'ru' %}Отправить{% else %}Send Message{% endif %}</button>
+        </form>
+    </div>
+</section>
+{% endblock %} 
